@@ -1,7 +1,9 @@
 package org.ualhmis.torneos;
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
 
 // Creación de jugadores y cálculo automático de categoría
 
@@ -12,7 +14,7 @@ class EquipoTest {
         Entrenador entrenador = new Entrenador("Carlos", "Masculino", LocalDate.of(1980, 3, 10));
         Equipo equipo = new Equipo("Tigres", "Juvenil", "Masculino", entrenador);
 
-        Jugador jugador = new Jugador("Luis", "Masculino", LocalDate.of(2006, 7, 15)); // Juvenil
+        Jugador jugador = new Jugador("Luis", "Masculino", LocalDate.of(2008, 7, 15)); // Juvenil
         equipo.agregarJugador(jugador);
 
         assertEquals(1, equipo.getJugadores().size());
