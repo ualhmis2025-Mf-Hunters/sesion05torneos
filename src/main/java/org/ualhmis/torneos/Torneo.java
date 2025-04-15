@@ -8,10 +8,14 @@ class Torneo {
     private String deporte;
     private String categoria;
     private String modalidad;
-    private List<Equipo> equipos;
     private String tipo;
+    private List<Equipo> equipos;
 
     public Torneo(String nombre, String deporte, String categoria, String modalidad, String tipo) {
+        if (nombre == null || nombre.trim().isEmpty() || deporte == null || deporte.trim().isEmpty()
+                || categoria == null || modalidad == null || tipo == null)
+            throw new IllegalArgumentException("Ningún dato del torneo puede ser nulo o vacío");
+
         this.nombre = nombre;
         this.deporte = deporte;
         this.categoria = categoria;
@@ -21,61 +25,67 @@ class Torneo {
     }
 
     public void registrarEquipo(Equipo equipo) {
-        if (!equipo.getCategoria().equals(this.categoria) || !equipo.getModalidad().equals(this.modalidad)) {
+        if (equipo == null)
+            throw new IllegalArgumentException("El equipo no puede ser nulo");
+
+        if (!equipo.getCategoria().equals(this.categoria) || !equipo.getModalidad().equalsIgnoreCase(this.modalidad)) {
             throw new IllegalArgumentException("El equipo no cumple con la categoría y modalidad del torneo");
         }
-        if (!equipos.contains(equipo)) {
+        if (!equipos.contains(equipo))
             equipos.add(equipo);
-        }
     }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public String getDeporte() {
-		return deporte;
-	}
+    public String getDeporte() {
+        return deporte;
+    }
 
-	public void setDeporte(String deporte) {
-		this.deporte = deporte;
-	}
+    public void setDeporte(String deporte) {
+        this.deporte = deporte;
+    }
 
-	public String getCategoria() {
-		return categoria;
-	}
+    public String getCategoria() {
+        return categoria;
+    }
 
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
 
-	public String getModalidad() {
-		return modalidad;
-	}
+    public String getModalidad() {
+        return modalidad;
+    }
 
-	public void setModalidad(String modalidad) {
-		this.modalidad = modalidad;
-	}
+    public void setModalidad(String modalidad) {
+        this.modalidad = modalidad;
+    }
 
-	public List<Equipo> getEquipos() {
-		return equipos;
-	}
+    public String getTipo() {
+        return tipo;
+    }
 
-	public void setEquipos(List<Equipo> equipos) {
-		this.equipos = equipos;
-	}
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
 
-	public String getTipo() {
-		return tipo;
-	}
+    public List<Equipo> getEquipos() {
+        return equipos;
+    }
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
-	}
-    
-    
+    public void setEquipos(List<Equipo> equipos) {
+        this.equipos = equipos;
+    }
+
+    @Override
+    public String toString() {
+        return "Torneo [nombre=" + nombre + ", deporte=" + deporte + ", categoria=" + categoria
+                + ", modalidad=" + modalidad + ", tipo=" + tipo + ", equipos=" + equipos + "]";
+    }
 }

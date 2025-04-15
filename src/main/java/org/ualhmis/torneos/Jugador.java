@@ -11,12 +11,28 @@ class Jugador extends Persona {
     }
 
     private String determinarCategoria(int edad) {
-        if (edad < 12) return "Infantil";
-        else if (edad < 15) return "Cadete";
-        else if (edad < 18) return "Juvenil";
-        else if (edad < 21) return "Junior";
-        else return "Absoluta";
+        if (edad < 12)
+            return "Infantil";
+        else if (edad < 15)
+            return "Cadete";
+        else if (edad < 18)
+            return "Juvenil";
+        else if (edad < 21)
+            return "Junior";
+        else
+            return "Absoluta";
     }
 
-    public String getCategoria() { return categoria; }
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void actualizarCategoria() {
+        this.categoria = determinarCategoria(calcularEdad());
+    }
+
+    @Override
+    public String toString() {
+        return "Jugador [" + super.toString() + ", categoria=" + categoria + "]";
+    }
 }

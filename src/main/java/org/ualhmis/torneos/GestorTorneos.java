@@ -3,7 +3,7 @@ package org.ualhmis.torneos;
 import java.util.ArrayList;
 import java.util.List;
 
-class GestorTorneos {
+public class GestorTorneos {
     private List<Torneo> torneos;
 
     public GestorTorneos() {
@@ -11,6 +11,22 @@ class GestorTorneos {
     }
 
     public void crearTorneo(String nombre, String deporte, String categoria, String modalidad, String tipo) {
-        torneos.add(new Torneo(nombre, deporte, categoria, modalidad, tipo));
+        Torneo torneo = new Torneo(nombre, deporte, categoria, modalidad, tipo);
+        torneos.add(torneo);
+    }
+
+    public List<Torneo> getTorneos() {
+        return torneos;
+    }
+
+    public void setTorneos(List<Torneo> torneos) {
+        if (torneos == null)
+            throw new IllegalArgumentException("La lista de torneos no puede ser nula");
+        this.torneos = torneos;
+    }
+
+    @Override
+    public String toString() {
+        return "GestorTorneos [torneos=" + torneos + "]";
     }
 }

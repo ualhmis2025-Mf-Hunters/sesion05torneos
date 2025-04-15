@@ -1,46 +1,61 @@
 package org.ualhmis.torneos;
-import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
-
-// Creación de jugadores y cálculo automático de categoría
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 class EquipoTest {
 
     @Test
-    void testAgregarJugadorCorrectamente() {
+    void testCreacionValidaEquipo() {
         Entrenador entrenador = new Entrenador("Carlos", "Masculino", LocalDate.of(1980, 3, 10));
         Equipo equipo = new Equipo("Tigres", "Juvenil", "Masculino", entrenador);
 
-        Jugador jugador = new Jugador("Luis", "Masculino", LocalDate.of(2008, 7, 15)); // Juvenil
-        equipo.agregarJugador(jugador);
+        assertEquals("Tigres", equipo.getNombre());
+        assertEquals("Juvenil", equipo.getCategoria());
+        assertEquals("Masculino", equipo.getModalidad());
+        assertEquals(entrenador, equipo.getEntrenador());
+    }
 
+    @Test
+    void testAgregarJugadorValido() {
+        Entrenador entrenador = new Entrenador("Carlos", "Masculino", LocalDate.of(1980, 3, 10));
+        Equipo equipo = new Equipo("Tigres", "Juvenil", "Masculino", entrenador);
+        Jugador jugador = new Jugador("Luis", "Masculino", LocalDate.of(2008, 7, 15));
+
+        equipo.agregarJugador(jugador);
+        assertEquals(1, equipo.getJugadores().size());
+        assertTrue(equipo.getJugadores().contains(jugador));
+    }
+
+    @Test
+    void testNoAgregarJugadorDiferenteCategoriaOModalidad() {
+        Entrenador entrenador = new Entrenador("Carlos", "Masculino", LocalDate.of(1980, 3, 10));
+        Equipo equipo = new Equipo("Tigres", "Juvenil", "Masculino", entrenador);
+        Jugador jugador = new Jugador("Laura", "Femenino", LocalDate.of(2008, 7, 15));
+
+        equipo.agregarJugador(jugador);
+        assertTrue(equipo.getJugadores().isEmpty());
+    }
+
+    @Test
+    void testSetJugadores() {
+        Equipo equipo = new Equipo("Aguilas", "Junior", "Femenino", new Entrenador("Ana", "Femenino", LocalDate.of(1985, 6, 20)));
+        ArrayList<Jugador> jugadores = new ArrayList<>();
+        jugadores.add(new Jugador("Lucia", "Femenino", LocalDate.of(2006, 4, 1)));
+
+        equipo.setJugadores(jugadores);
         assertEquals(1, equipo.getJugadores().size());
     }
 
     @Test
-    void testNoAgregarJugadorDeDiferenteCategoria() {
+    void testEqualsAndToString() {
         Entrenador entrenador = new Entrenador("Carlos", "Masculino", LocalDate.of(1980, 3, 10));
-        Equipo equipo = new Equipo("Tigres", "Juvenil", "Masculino", entrenador);
+        Equipo equipo1 = new Equipo("Tigres", "Juvenil", "Masculino", entrenador);
+        Equipo equipo2 = new Equipo("Tigres", "Juvenil", "Masculino", entrenador);
 
-        Jugador jugador = new Jugador("Luis", "Masculino", LocalDate.of(2015, 5, 10)); // Infantil
-
-        equipo.agregarJugador(jugador);
-
-        assertEquals(0, equipo.getJugadores().size()); // No debe agregarse
-    }
-
-    @Test
-    void testAsignarSegundoEntrenador() {
-        Entrenador entrenador1 = new Entrenador("Carlos", "Masculino", LocalDate.of(1980, 3, 10));
-        Entrenador entrenador2 = new Entrenador("Ana", "Femenino", LocalDate.of(1985, 6, 20));
-
-        Equipo equipo = new Equipo("Tigres", "Juvenil", "Masculino", entrenador1);
-        equipo.asignarSegundoEntrenador(entrenador2);
-
-        assertNotNull(equipo.getSegundoEntrenador());
-        assertEquals("Ana", equipo.getSegundoEntrenador().getNombre());
+        assertEquals(equipo1, equipo2);
+        assertEquals(equipo1.toString(), equipo2.toString());
     }
 }

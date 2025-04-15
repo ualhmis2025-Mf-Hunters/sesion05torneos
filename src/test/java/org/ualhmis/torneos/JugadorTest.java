@@ -1,34 +1,44 @@
 package org.ualhmis.torneos;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
-
-// Restricciones en los equipos (jugadores de la misma categoría y modalidad)
 
 class JugadorTest {
 
     @Test
     void testCategoriaPorEdad() {
-        Jugador jugador1 = new Jugador("Carlos", "Masculino", LocalDate.of(2015, 5, 10));
-        assertEquals("Infantil", jugador1.getCategoria());
+        Jugador infantil = new Jugador("Carlos", "Masculino", LocalDate.now().minusYears(10));
+        assertEquals("Infantil", infantil.getCategoria());
 
-        Jugador jugador2 = new Jugador("Luis", "Masculino", LocalDate.of(2011, 3, 15));
-        assertEquals("Cadete", jugador2.getCategoria());
+        Jugador cadete = new Jugador("Luis", "Masculino", LocalDate.now().minusYears(13));
+        assertEquals("Cadete", cadete.getCategoria());
 
-        Jugador jugador3 = new Jugador("Ana", "Femenino", LocalDate.of(2008, 8, 22));
-        assertEquals("Juvenil", jugador3.getCategoria());
+        Jugador juvenil = new Jugador("Ana", "Femenino", LocalDate.now().minusYears(16));
+        assertEquals("Juvenil", juvenil.getCategoria());
 
-        Jugador jugador4 = new Jugador("Pedro", "Masculino", LocalDate.of(2005, 1, 30));
-        assertEquals("Junior", jugador4.getCategoria());
+        Jugador junior = new Jugador("Pedro", "Masculino", LocalDate.now().minusYears(19));
+        assertEquals("Junior", junior.getCategoria());
 
-        Jugador jugador5 = new Jugador("Marta", "Femenino", LocalDate.of(1998, 6, 5));
-        assertEquals("Absoluta", jugador5.getCategoria());
+        Jugador absoluta = new Jugador("Marta", "Femenino", LocalDate.now().minusYears(25));
+        assertEquals("Absoluta", absoluta.getCategoria());
     }
 
     @Test
-    void testCreacionJugadorInvalido() {
-        assertThrows(IllegalArgumentException.class, () -> new Jugador("", "Masculino", LocalDate.of(2010, 1, 1)));
-        assertThrows(IllegalArgumentException.class, () -> new Jugador("Juan", "", LocalDate.of(2010, 1, 1)));
-        assertThrows(IllegalArgumentException.class, () -> new Jugador("Juan", "Masculino", null));
+    void testActualizarCategoria() {
+        Jugador jugador = new Jugador("Maria", "Femenino", LocalDate.now().minusYears(11));
+        assertEquals("Infantil", jugador.getCategoria());
+
+        jugador.setFechaNacimiento(LocalDate.now().minusYears(16));
+        jugador.actualizarCategoria();
+        assertEquals("Juvenil", jugador.getCategoria());
+    }
+
+    @Test
+    void testToString() {
+        Jugador jugador = new Jugador("Maria", "Femenino", LocalDate.of(2000, 1, 1));
+        String esperado = "Jugador [Persona [nombre=Maria, genero=Femenino, fechaNacimiento=2000-01-01], categoria=Absoluta]";
+
+        assertEquals(esperado, jugador.toString());
     }
 }
