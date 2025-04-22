@@ -60,4 +60,26 @@ class PartidoTest {
         String esperado = "Partido [equipo1=Tigres (1) vs equipo2=Leones (1)]";
         assertEquals(esperado, partido.toString());
     }
+
+    @Test
+void testSetters() {
+    Equipo equipo1 = new Equipo("Tigres", "Juvenil", "Masculino", new Entrenador("Carlos", "Masculino", LocalDate.of(1980, 3, 10)));
+    Equipo equipo2 = new Equipo("Leones", "Juvenil", "Masculino", new Entrenador("Ana", "Femenino", LocalDate.of(1985, 6, 20)));
+
+    Partido partido = new Partido(equipo1, equipo2);
+
+    Equipo nuevoEquipo1 = new Equipo("Águilas", "Juvenil", "Masculino", new Entrenador("Luis", "Masculino", LocalDate.of(1975, 1, 15)));
+    Equipo nuevoEquipo2 = new Equipo("Halcones", "Juvenil", "Masculino", new Entrenador("Marta", "Femenino", LocalDate.of(1985, 7, 10)));
+    
+    partido.setEquipo1(nuevoEquipo1);
+    partido.setEquipo2(nuevoEquipo2);
+    partido.setGolesEquipo1(4);
+    partido.setGolesEquipo2(3);
+
+    assertEquals(nuevoEquipo1, partido.getEquipo1());
+    assertEquals(nuevoEquipo2, partido.getEquipo2());
+    assertEquals(4, partido.getGolesEquipo1());
+    assertEquals(3, partido.getGolesEquipo2());
+}
+
 }

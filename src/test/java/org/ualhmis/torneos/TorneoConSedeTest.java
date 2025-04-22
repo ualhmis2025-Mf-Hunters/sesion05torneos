@@ -69,4 +69,35 @@ class TorneoConSedeTest {
         assertEquals(sede2, tcs.getSede());
         assertTrue(tcs.toString().contains("Sede 2"));
     }
+
+    @Test
+    void testSetters() {
+        Torneo torneo1 = new Torneo("Torneo 1", "Fútbol", "Senior", "Masculino", "Copa");
+        Sede sede1 = new Sede("Estadio Principal");
+        
+        TorneoConSede tcs = new TorneoConSede(torneo1, sede1);
+        
+        Torneo torneo2 = new Torneo("Torneo 2", "Baloncesto", "Junior", "Femenino", "Liga");
+        Sede sede2 = new Sede("Pabellón de Deportes");
+
+        tcs.setTorneo(torneo2);
+        tcs.setSede(sede2);
+
+        assertEquals(torneo2, tcs.getTorneo());
+        assertEquals(sede2, tcs.getSede());
+    }
+
+    @Test
+    void testValidarInstalacionesAdecuadasConMetodosPrivados() {
+        
+        Torneo torneo = new Torneo("Liga Fútbol", "Fútbol", "Juvenil", "Masculino", "Liga");
+        Sede sede = new Sede("Sede Fútbol");
+        sede.agregarInstalacion(new Instalacion("Campo 1", "campo"));
+
+        TorneoConSede tcs = new TorneoConSede(torneo, sede);
+        assertTrue(tcs.validarInstalacionesAdecuadas());  
+        
+        sede.agregarInstalacion(new Instalacion("Pista Tenis", "pista"));
+        assertTrue(tcs.validarInstalacionesAdecuadas());  
+    }
 }

@@ -57,4 +57,18 @@ class InstalacionTest {
         assertTrue(i.toString().contains("Pabellón 1"));
         assertTrue(i.toString().contains("pabellón"));
     }
+
+    @Test
+void testSetterss() {
+    Instalacion instalacion = new Instalacion("Estadio Principal", "Fútbol");
+
+    instalacion.setNombre("Nuevo Estadio");
+    assertEquals("Nuevo Estadio", instalacion.getNombre());
+
+    instalacion.setTipo("Baloncesto");
+    assertEquals("Baloncesto", instalacion.getTipo());
+}
+
+
+
 }

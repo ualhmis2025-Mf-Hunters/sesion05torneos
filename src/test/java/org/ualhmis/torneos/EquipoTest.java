@@ -58,4 +58,24 @@ class EquipoTest {
         assertEquals(equipo1, equipo2);
         assertEquals(equipo1.toString(), equipo2.toString());
     }
+
+    @Test
+void testSetters() {
+    Equipo equipo = new Equipo("Original", "Infantil", "Femenino", new Entrenador("Pedro", "Masculino", LocalDate.of(1975, 5, 5)));
+
+    equipo.setNombre("Renombrado");
+    equipo.setCategoria("Cadete");
+    equipo.setModalidad("Masculino");
+
+    Entrenador nuevoEntrenador = new Entrenador("Marta", "Femenino", LocalDate.of(1988, 9, 12));
+    equipo.setEntrenador(nuevoEntrenador);
+    equipo.setSegundoEntrenador(new Entrenador("Laura", "Femenino", LocalDate.of(1990, 11, 22)));
+
+    assertEquals("Renombrado", equipo.getNombre());
+    assertEquals("Cadete", equipo.getCategoria());
+    assertEquals("Masculino", equipo.getModalidad());
+    assertEquals(nuevoEntrenador, equipo.getEntrenador());
+    assertEquals("Laura", equipo.getSegundoEntrenador().getNombre());
+}
+
 }
