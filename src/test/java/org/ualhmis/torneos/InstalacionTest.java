@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 class InstalacionTest {
 
@@ -59,16 +61,31 @@ class InstalacionTest {
     }
 
     @Test
-void testSetterss() {
-    Instalacion instalacion = new Instalacion("Estadio Principal", "Fútbol");
+    void testSetAndGetReservas() {
+        Instalacion i = new Instalacion("Campo A", "campo");
+        Equipo e1 = new Equipo("E1", "Juvenil", "Masculino", new Entrenador("A", "Masculino", LocalDate.of(1980, 1, 1)));
+        Equipo e2 = new Equipo("E2", "Juvenil", "Masculino", new Entrenador("B", "Masculino", LocalDate.of(1980, 1, 1)));
+        Partido p = new Partido(e1, e2);
 
-    instalacion.setNombre("Nuevo Estadio");
-    assertEquals("Nuevo Estadio", instalacion.getNombre());
+        LocalDateTime fecha1 = LocalDateTime.of(2025, 6, 10, 10, 0);
+        LocalDateTime fecha2 = LocalDateTime.of(2025, 6, 10, 12, 0);
 
-    instalacion.setTipo("Baloncesto");
-    assertEquals("Baloncesto", instalacion.getTipo());
-}
+        Map<LocalDateTime, Partido> reservas = new HashMap<>();
+        reservas.put(fecha1, p);
+        reservas.put(fecha2, p);
 
+        i.setReservas(reservas);
 
+        Map<LocalDateTime, Partido> reservasObtenidas = i.getReservas();
 
+        assertNotNull(reservasObtenidas, "Las reservas no deben ser nulas");
+        assertEquals(2, reservasObtenidas.size(), "El número de reservas debe ser 2");
+        assertTrue(reservasObtenidas.containsKey(fecha1), "Debe contener la reserva para la fecha1");
+        assertTrue(reservasObtenidas.containsKey(fecha2), "Debe contener la reserva para la fecha2");
+        assertEquals(p, reservasObtenidas.get(fecha1), "El partido asignado para fecha1 no es correcto");
+        assertEquals(p, reservasObtenidas.get(fecha2), "El partido asignado para fecha2 no es correcto");
+    }
+
+    
+    
 }
