@@ -18,9 +18,19 @@ class PersonaTest {
 
     @Test
     void testCreacionInvalida() {
-        assertThrows(IllegalArgumentException.class, () -> new Persona("", "Masculino", LocalDate.of(1990, 5, 20)));
-        assertThrows(IllegalArgumentException.class, () -> new Persona("Juan", "", LocalDate.of(1990, 5, 20)));
-        assertThrows(IllegalArgumentException.class, () -> new Persona("Juan", "Masculino", null));
+        assertThrows(IllegalArgumentException.class, () -> new Persona("", "Masculino", LocalDate.of(1990, 5, 20)), "El nombre no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> new Persona("   ", "Masculino", LocalDate.of(1990, 5, 20)), "El nombre no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> new Persona("Juan", "", LocalDate.of(1990, 5, 20)), "El género no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> new Persona("Juan", "   ", LocalDate.of(1990, 5, 20)), "El género no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> new Persona(null, "Masculino", LocalDate.of(1990, 5, 20)), "El nombre no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> new Persona("Juan", null, LocalDate.of(1990, 5, 20)), "El género no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> new Persona("Juan", "Masculino", null), "La fecha de nacimiento no puede ser nula");
     }
 
     @Test
@@ -49,9 +59,19 @@ class PersonaTest {
     void testSettersInvalidos() {
         Persona persona = new Persona("Luis", "Masculino", LocalDate.of(1990, 1, 1));
 
-        assertThrows(IllegalArgumentException.class, () -> persona.setNombre(""));
-        assertThrows(IllegalArgumentException.class, () -> persona.setGenero(""));
-        assertThrows(IllegalArgumentException.class, () -> persona.setFechaNacimiento(null));
+        assertThrows(IllegalArgumentException.class, () -> persona.setNombre(""), "El nombre no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> persona.setNombre("   "), "El nombre no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> persona.setGenero(""), "El género no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> persona.setGenero("   "), "El género no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> persona.setNombre(null), "El nombre no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> persona.setGenero(null), "El género no puede estar vacío");
+
+        assertThrows(IllegalArgumentException.class, () -> persona.setFechaNacimiento(null), "La fecha de nacimiento no puede ser nula");
     }
 
     @Test
@@ -61,4 +81,5 @@ class PersonaTest {
 
         assertEquals(esperado, persona.toString());
     }
+
 }
