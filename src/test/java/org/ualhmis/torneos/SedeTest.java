@@ -1,34 +1,42 @@
 package org.ualhmis.torneos;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 class SedeTest {
 
     @Test
-    void testCreacionValida() {
+    void testConstructorValido() {
         Sede sede = new Sede("Centro Deportivo");
         assertEquals("Centro Deportivo", sede.getNombre());
         assertTrue(sede.getInstalaciones().isEmpty());
     }
 
     @Test
-    void testCreacionInvalida() {
+    void testConstructorInvalido() {
         assertThrows(IllegalArgumentException.class, () -> new Sede(""));
+        assertThrows(IllegalArgumentException.class, () -> new Sede("   "));
         assertThrows(IllegalArgumentException.class, () -> new Sede(null));
     }
 
     @Test
     void testAgregarInstalacion() {
         Sede sede = new Sede("Polideportivo");
-        Instalacion instalacion = new Instalacion("Pista 1", "pista");
+        Instalacion instalacion1 = new Instalacion("Pista 1", "pista");
+        Instalacion instalacion2 = new Instalacion("Pista 2", "pista");
 
-        sede.agregarInstalacion(instalacion);
+        sede.agregarInstalacion(instalacion1);
+        sede.agregarInstalacion(instalacion2);
+        
         List<Instalacion> instalaciones = sede.getInstalaciones();
-
-        assertEquals(1, instalaciones.size());
-        assertEquals("Pista 1", instalaciones.get(0).getNombre());
+        assertEquals(2, instalaciones.size());
+        assertTrue(instalaciones.contains(instalacion1));
+        assertTrue(instalaciones.contains(instalacion2));
     }
 
     @Test
@@ -38,21 +46,38 @@ class SedeTest {
     }
 
     @Test
-    void testSetters() {
+    void testSetNombre() {
+        Sede sede = new Sede("Original");
+        
+        sede.setNombre("Nuevo Nombre");
+        assertEquals("Nuevo Nombre", sede.getNombre());
+        
+        assertThrows(IllegalArgumentException.class, () -> sede.setNombre(""));
+        assertThrows(IllegalArgumentException.class, () -> sede.setNombre("   "));
+        assertThrows(IllegalArgumentException.class, () -> sede.setNombre(null));
+    }
+
+    @Test
+    void testSetInstalaciones() {
         Sede sede = new Sede("Complejo A");
-        sede.setNombre("Complejo B");
-        assertEquals("Complejo B", sede.getNombre());
+        List<Instalacion> instalaciones = new ArrayList<>();
+        instalaciones.add(new Instalacion("Campo 1", "campo"));
+        instalaciones.add(new Instalacion("Pabellón", "pabellón"));
 
-        List<Instalacion> lista = List.of(new Instalacion("Campo 1", "campo"));
-        sede.setInstalaciones(lista);
-        assertEquals(1, sede.getInstalaciones().size());
-
+        sede.setInstalaciones(instalaciones);
+        assertEquals(2, sede.getInstalaciones().size());
+        
         assertThrows(IllegalArgumentException.class, () -> sede.setInstalaciones(null));
     }
 
     @Test
     void testToString() {
         Sede sede = new Sede("Sede Principal");
-        assertTrue(sede.toString().contains("Sede Principal"));
+        sede.agregarInstalacion(new Instalacion("Pista Central", "pista"));
+        
+        String str = sede.toString();
+        assertTrue(str.contains("Sede Principal"));
+        assertTrue(str.contains("Pista Central"));
+        assertTrue(str.contains("instalaciones="));
     }
 }
